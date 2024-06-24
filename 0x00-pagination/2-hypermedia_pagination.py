@@ -65,8 +65,6 @@ class Server:
         start, end = index_range(page, page_size)
         if len(self.__dataset) < start:
             return []
-        if len(self.__dataset) < end:
-            end = len(self.__dataset)
         return self.__dataset[start: end]
 
     def get_hyper(self, page: int = 1, page_size: int
@@ -101,10 +99,6 @@ class Server:
         metadata['data'] = data
         total_pages: int = math.ceil(len(self.__dataset) / page_size)
         metadata['total_pages'] = total_pages
-        metadata['prev_page'] = None
-        metadata['next_page'] = None
-        if start > 0:
-            metadata['prev_page'] = page - 1
-        if len(self.__dataset) < end:
-            metadata['next_page'] = page + 1
+        metadata['prev_page'] = page - 1 if start > 0 else None
+        metadata['next_page'] = page + 1 if end < len(self.__dataset) else None
         return metadata
