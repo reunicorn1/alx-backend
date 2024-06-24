@@ -101,7 +101,7 @@ class Server:
         metadata['next_page'] = page + 1
         if page == 1:
             metadata['prev_page'] = None
-        if page == total_pages or not data:
+        if page >= total_pages or not data:
             metadata['next_page'] = None
         if page > total_pages:
             metadata['page_size'] = 0
