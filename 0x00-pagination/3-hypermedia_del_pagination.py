@@ -37,24 +37,6 @@ class Server:
             }
         return self.__indexed_dataset
 
-    def next_index(self, index: Optional[int], jump: int = 1) -> Optional[int]:
-        """Gets the next index after a certain count
-        """
-        if index is None:
-            return None
-
-        start = index
-        while jump:
-            while not self.__indexed_dataset.get(start):
-                start += 1
-                if start >= len(self.__dataset):
-                    return None
-                print(start)
-            jump -= 1
-            start += 1
-        print('end§:')
-        return start
-
     def get_hyper_index(self, index: Optional[int] = None,
                         page_size: int = 10) -> Dict:
         """
@@ -88,21 +70,20 @@ class Server:
         assert isinstance(index, int) and index >= 0 and index < len(
                 self.__dataset)
         data = []
-        idx: Optional[int] = index
-        for _ in range(page_size):
-            if idx is None:
+        next_index = index
+
+        for item in range(page_size):
+            while not self.__indexed_dataset.get(next_index) and len(
+                    self.__indexed_dataset) > next_index:
+                next_index += 1
+            if len(self.__indexed_dataset) <= next_index:
                 break
-            while not self.__indexed_dataset.get(idx) and idx < len(
-                    self.__dataset):
-                idx += 1
-            if idx >= len(self.__dataset):
-                break
-            data.append(self.__indexed_dataset.get(idx))
-            idx += 1
+            data.append(self.__indexed_dataset.get(next_index))
+            next_index += 1
 
         return {
             'index': index,
-            'next_index': self.next_index(index, page_size),
+            'next_index': next_index,
             'page_size': len(data),
             'data': data
         }
