@@ -92,7 +92,7 @@ class Server:
         total_pages: the total number of pages in the dataset as an
         integer
         """
-        end = index_range(page, page_size)[1]
+        start, end = index_range(page, page_size)
 
         metadata: Dict[str, int | List[List[Any]] | None] = {}
         data: List[List[Any]] = self.get_page(page, page_size)
@@ -101,10 +101,10 @@ class Server:
         metadata['data'] = data
         total_pages: int = math.ceil(len(self.__dataset) / page_size)
         metadata['total_pages'] = total_pages
-        metadata['prev_page'] = page - 1
-        metadata['next_page'] = page + 1
-        if page == 1:
-            metadata['prev_page'] = None
-        if len(self.__dataset) <= end or not data:
-            metadata['next_page'] = None
+        metadata['prev_page'] = None
+        metadata['next_page'] = None
+        if start > 0:
+            metadata['prev_page'] = page - 1
+        if len(self.__dataset) < end:
+            metadata['next_page'] = page + 1
         return metadata
