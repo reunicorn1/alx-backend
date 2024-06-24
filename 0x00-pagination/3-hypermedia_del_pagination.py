@@ -76,8 +76,6 @@ class Server:
             while not self.__indexed_dataset.get(next_index) and len(
                     self.__indexed_dataset) > next_index:
                 next_index += 1
-            if len(self.__indexed_dataset) <= next_index:
-                break
             data.append(self.__indexed_dataset.get(next_index))
             next_index += 1
 
