@@ -1,5 +1,10 @@
+#!/usr/bin/env python3
+"""
+Deletion-resilient hypermedia pagination
+"""
 from typing import List, Dict, Optional
 import csv
+
 
 class Server:
     """Server class to paginate a database of popular baby names.
@@ -50,7 +55,8 @@ class Server:
         print('end§:')
         return start
 
-    def get_hyper_index(self, index: Optional[int] = None, page_size: int = 10) -> Dict:
+    def get_hyper_index(self, index: Optional[int] = None,
+                        page_size: int = 10) -> Dict:
         """
         This function returns metadata about the paginated dataset
         to help clients request for the next page and also giving them
@@ -79,7 +85,8 @@ class Server:
         if index is None:
             index = 0
 
-        assert isinstance(index, int) and index >= 0 and index < len(self.__dataset)
+        assert isinstance(index, int) and index >= 0 and index < len(
+                self.__dataset)
         data = []
         idx: Optional[int] = index
         for _ in range(page_size):
@@ -95,8 +102,7 @@ class Server:
 
         return {
             'index': index,
-            'next_index': self.next_index(index, page_size) ,
+            'next_index': self.next_index(index, page_size),
             'page_size': len(data),
             'data': data
         }
-
