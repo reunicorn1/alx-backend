@@ -73,8 +73,7 @@ class Server:
         next_index = index
 
         for item in range(page_size):
-            while not self.__indexed_dataset.get(next_index) and len(
-                    self.__indexed_dataset) > next_index:
+            while not self.__indexed_dataset.get(next_index):
                 next_index += 1
             data.append(self.__indexed_dataset.get(next_index))
             next_index += 1
