@@ -63,8 +63,11 @@ class Server:
         assert isinstance(page, int) and page > 0
         assert isinstance(page_size, int) and page_size > 0
         start, end = index_range(page, page_size)
-        if len(self.__dataset) < end:
+        if len(self.__dataset) < start:
             return []
+        if len(self.__dataset) < end:
+            end = len(self.__dataset)
+            print(end)
         return self.__dataset[start: end]
 
     def get_hyper(self, page: int = 1, page_size: int
@@ -92,7 +95,7 @@ class Server:
         """
         metadata: Dict[str, int | List[List[Any]] | None] = {}
         data: List[List[Any]] = self.get_page(page, page_size)
-        metadata['page_size'] = page_size
+        metadata['page_size'] = len(data)
         metadata['page'] = page
         metadata['data'] = data
         total_pages: int = math.ceil(len(self.__dataset) / page_size)
