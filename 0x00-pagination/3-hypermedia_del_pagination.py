@@ -80,7 +80,8 @@ class Server:
 
         return {
             'index': index,
-            'next_index': next_index if len(self.__indexed_dataset) < next_index else None,
+            'next_index': next_index if len(
+                self.__indexed_dataset) < next_index else None,
             'page_size': len(data),
             'data': data
         }
