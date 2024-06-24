@@ -59,13 +59,12 @@ class Server:
         -------
         a page of the dataset as a list of rows
         """
-        self.dataset()
         assert isinstance(page, int) and page > 0
         assert isinstance(page_size, int) and page_size > 0
         start, end = index_range(page, page_size)
         if len(self.__dataset) < start:
             return []
-        return self.__dataset[start: end]
+        return self.dataset()[start: end]
 
     def get_hyper(self, page: int = 1, page_size: int
                   = 10) -> Dict[str, int | List[List[int]] | None]:
@@ -90,15 +89,15 @@ class Server:
         total_pages: the total number of pages in the dataset as an
         integer
         """
+        page_data = self.get_page(page, page_size)
         start, end = index_range(page, page_size)
-
-        metadata: Dict[str, int | List[List[Any]] | None] = {}
-        data: List[List[Any]] = self.get_page(page, page_size)
-        metadata['page_size'] = len(data)
-        metadata['page'] = page
-        metadata['data'] = data
-        total_pages: int = math.ceil(len(self.__dataset) / page_size)
-        metadata['total_pages'] = total_pages
-        metadata['prev_page'] = page - 1 if start > 0 else None
-        metadata['next_page'] = page + 1 if end < len(self.__dataset) else None
-        return metadata
+        total_pages = math.ceil(len(self.__dataset) / page_size)
+        page_info = {
+            'page_size': len(page_data),
+            'page': page,
+            'data': page_data,
+            'next_page': page + 1 if end < len(self.__dataset) else None,
+            'prev_page': page - 1 if start > 0 else None,
+            'total_pages': total_pages,
+        }
+        return page_info
