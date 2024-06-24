@@ -89,6 +89,8 @@ class Server:
         total_pages: the total number of pages in the dataset as an
         integer
         """
+        if page < 1:
+            page = 1
         page_data = self.get_page(page, page_size)
         start, end = index_range(page, page_size)
         total_pages = math.ceil(len(self.__dataset) / page_size)
