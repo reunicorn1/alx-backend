@@ -6,7 +6,7 @@ Starting a web application listenting on
 0.0.0.0, port 5000
 """
 from flask import Flask, render_template, request
-from flask_babel import Babel, gettext
+from flask_babel import Babel, gettext, _
 
 
 class Config:
@@ -43,7 +43,7 @@ def index() -> str:
     """
     This is the entry point to the application
     """
-    return render_template("0-index.html")
+    return render_template("3-index.html")
 
 
 if __name__ == "__main__":
