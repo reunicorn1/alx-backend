@@ -7,7 +7,6 @@ Starting a web application listenting on
 """
 from flask import Flask, render_template, request, g
 from flask_babel import Babel, gettext, _
-from typing import Dict, Union
 
 
 class Config:
@@ -31,7 +30,7 @@ babel = Babel(app)
 
 
 @babel.localeselector
-def get_locale() -> str:
+def get_locale():
     """
     This function determine the lanaguage to be used
     """
@@ -42,7 +41,7 @@ def get_locale() -> str:
             app.config['LANGUAGES'])
 
 
-def get_user() -> Union[Dict, None]:
+def get_user():
     """
     This function returns a user dictionary or none if the user ID
     cannot be found
@@ -60,7 +59,7 @@ def get_user() -> Union[Dict, None]:
 
 
 @app.before_request
-def before_request() -> None:
+def before_request():
     """
     This function runs before each request gets processed
     """
@@ -68,7 +67,7 @@ def before_request() -> None:
 
 
 @app.route('/', strict_slashes=False)
-def index() -> str:
+def index():
     """
     This is the entry point to the application
     """

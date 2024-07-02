@@ -30,7 +30,7 @@ babel = Babel(app)
 
 
 @babel.localeselector
-def get_locale() -> str:
+def get_locale():
     """
     This function determine the lanaguage to be used
     """
@@ -42,7 +42,7 @@ def get_locale() -> str:
 
 
 @app.route('/', strict_slashes=False)
-def index() -> str:
+def index():
     """
     This is the entry point to the application
     """
