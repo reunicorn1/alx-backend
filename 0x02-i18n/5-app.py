@@ -6,6 +6,7 @@ Starting a web application listenting on
 0.0.0.0, port 5000
 """
 from flask import Flask, render_template, request, g
+from typing import Union, Dict
 from flask_babel import Babel, gettext, _
 
 
@@ -30,7 +31,7 @@ babel = Babel(app)
 
 
 @babel.localeselector
-def get_locale():
+def get_locale() -> str:
     """
     This function determine the lanaguage to be used
     """
@@ -41,7 +42,7 @@ def get_locale():
             app.config['LANGUAGES'])
 
 
-def get_user():
+def get_user() -> Union[Dict, None]:
     """
     This function returns a user dictionary or none if the user ID
     cannot be found
