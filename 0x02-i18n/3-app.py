@@ -25,12 +25,13 @@ class Config:
 
 app = Flask(__name__)
 app.config.from_object(Config)
+app.url_map.strict_slashes = False
 
 babel = Babel(app)
 
 
 @babel.localeselector
-def get_locale():
+def get_locale() -> str:
     """
     This function determine the lanaguage to be used
     """
@@ -38,8 +39,8 @@ def get_locale():
             app.config['LANGUAGES'])
 
 
-@app.route('/', strict_slashes=False)
-def index():
+@app.route('/')
+def index() -> str:
     """
     This is the entry point to the application
     """

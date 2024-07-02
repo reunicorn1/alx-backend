@@ -25,7 +25,7 @@ class Config:
 
 app = Flask(__name__)
 app.config.from_object(Config)
-
+app.url_map.strict_slashes = False
 babel = Babel(app)
 
 
@@ -66,7 +66,7 @@ def before_request():
     g.user = get_user()
 
 
-@app.route('/', strict_slashes=False)
+@app.route('/')
 def index():
     """
     This is the entry point to the application
