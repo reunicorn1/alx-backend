@@ -6,6 +6,7 @@ Starting a web application listenting on
 0.0.0.0, port 5000
 """
 from flask import Flask, render_template, request, g
+from typing import Union, Dict
 from flask_babel import Babel
 
 
@@ -27,6 +28,12 @@ app = Flask(__name__)
 app.config.from_object(Config)
 app.url_map.strict_slashes = False
 babel = Babel(app)
+users = {
+        1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
+        2: {"name": "Beyonce", "locale": "en", "timezone": "US/Central"},
+        3: {"name": "Spock", "locale": "kg", "timezone": "Vulcan"},
+        4: {"name": "Teletubby", "locale": None, "timezone": "Europe/London"},
+}
 
 
 @babel.localeselector
@@ -41,18 +48,11 @@ def get_locale():
             app.config['LANGUAGES'])
 
 
-def get_user():
+def get_user() -> Union[Dict, None]:
     """
     This function returns a user dictionary or none if the user ID
     cannot be found
     """
-    users = {
-            1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
-            2: {"name": "Beyonce", "locale": "en", "timezone": "US/Central"},
-            3: {"name": "Spock", "locale": "kg", "timezone": "Vulcan"},
-            4: {"name": "Teletubby", "locale": None, "timezone":
-                "Europe/London"},
-        }
     _id = request.args.get('login_as')
     user = users.get(int(_id)) if _id else None
     return user
