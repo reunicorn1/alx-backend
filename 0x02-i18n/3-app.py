@@ -6,8 +6,7 @@ Starting a web application listenting on
 0.0.0.0, port 5000
 """
 from flask import Flask, render_template, request
-from flask_babel import Babel, gettext, _
-
+from flask_babel import Babel
 
 class Config:
     """
@@ -27,16 +26,17 @@ app = Flask(__name__)
 app.config.from_object(Config)
 app.url_map.strict_slashes = False
 
-babel = Babel(app)
+#babel = Babel(app)
 
 
-@babel.localeselector
+#@babel.localeselector
 def get_locale() -> str:
     """
     This function determine the lanaguage to be used
     """
     return request.accept_languages.best_match(
             app.config['LANGUAGES'])
+babel = Babel(app, locale_selector=get_locale)
 
 
 @app.route('/')

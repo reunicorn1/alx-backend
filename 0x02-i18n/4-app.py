@@ -6,7 +6,7 @@ Starting a web application listenting on
 0.0.0.0, port 5000
 """
 from flask import Flask, render_template, request
-from flask_babel import Babel, gettext, _
+from flask_babel import Babel
 
 
 class Config:
@@ -30,7 +30,7 @@ babel = Babel(app)
 
 
 @babel.localeselector
-def get_locale() -> str:
+def get_locale():
     """
     This function determine the lanaguage to be used
     """
@@ -42,7 +42,7 @@ def get_locale() -> str:
 
 
 @app.route('/')
-def index() -> str:
+def index():
     """
     This is the entry point to the application
     """

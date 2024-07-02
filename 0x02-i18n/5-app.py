@@ -7,7 +7,7 @@ Starting a web application listenting on
 """
 from flask import Flask, render_template, request, g
 from typing import Union, Dict
-from flask_babel import Babel, gettext, _
+from flask_babel import Babel
 
 
 class Config:
