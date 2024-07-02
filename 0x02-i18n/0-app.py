@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 
 @app.route('/', strict_slashes=False)
-def index():
+def index() -> str:
     """
     This is the entry point to the application
     """

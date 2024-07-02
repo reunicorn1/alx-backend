@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-1. Basic Babel setup
+2. Get locale from request
 
 Starting a web application listenting on
 0.0.0.0, port 5000
 """
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_babel import Babel
 
 
@@ -27,6 +27,15 @@ app = Flask(__name__)
 app.config.from_object(Config)
 
 babel = Babel(app)
+
+
+@babel.localeselector
+def get_locale() -> str:
+    """
+    This function determine the lanaguage to be used
+    """
+    return request.accept_languages.best_match(
+            app.config['LANGUAGES'])
 
 
 @app.route('/', strict_slashes=False)
