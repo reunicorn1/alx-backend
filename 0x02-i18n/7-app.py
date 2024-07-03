@@ -38,7 +38,7 @@ users = {
 
 
 @babel.localeselector
-def get_locale():
+def get_locale() -> str:
     """
     This function determine the lanaguage to be used
     """
@@ -53,7 +53,7 @@ def get_locale():
 
 
 @babel.timezoneselector
-def get_timezone():
+def get_timezone() -> Union[str, None]:
     """
     This method determine the timezone to be used
     """
@@ -81,7 +81,7 @@ def get_user() -> Union[Dict, None]:
 
 
 @app.before_request
-def before_request():
+def before_request() -> None:
     """
     This function runs before each request gets processed
     """
@@ -89,7 +89,7 @@ def before_request():
 
 
 @app.route('/')
-def index():
+def index() -> str:
     """
     This is the entry point to the application
     """
