@@ -1,5 +1,4 @@
 import { createClient } from 'redis';
-const redis = require('redis');
 
 const client = createClient({
     socket: {
